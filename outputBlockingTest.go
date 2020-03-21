@@ -21,13 +21,22 @@ type testFunction struct {
 	init func() testFunctionInstance
 }
 
-func main() {
+var (
+	testString   string
+	loopDuration int64
+	useNewLine   string
+)
+
+func init() {
 	// defaultTestString := "Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World"
 	defaultTestString := "Hello World"
 
-	testString := *(flag.String("text", defaultTestString, "the string to use in the print loop"))
-	loopDuration := *(flag.Int64("t", 800, "max duration of the loop in milliseconds [ms]"))
-	useNewLine := *(flag.String("nl", "\n", "newline string, used for every function expect fmt.Println; string gets build before time stoping"))
+	flag.StringVar(&testString, "text", defaultTestString, "the string to use in the print loop")
+	flag.Int64Var(&loopDuration, "t", 800, "max duration of the loop in milliseconds [ms]")
+	flag.StringVar(&useNewLine, "nl", "\n", "newline string, used for every function expect fmt.Println; string gets build before time stoping")
+}
+
+func main() {
 	flag.Parse()
 
 	testStringWithNewLine := testString + useNewLine
